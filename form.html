@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Penghitungan Kendaraan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        h1 {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .input-group div {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .input-group input {
+            width: calc(100% - 20px); /* Adjusted to account for padding */
+        }
+
+        select {
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Formulir Penghitungan Kendaraan</h1>
+
+    <div class="container">
+        <form id="traffic-form">
+            <label for="lokasi">Lokasi:</label>
+            <select id="lokasi" name="lokasi" onchange="adjustDirections()">
+                <option value="Lembang">Lembang</option>
+                <option value="Padalarang">Padalarang</option>
+            </select>
+
+            <label for="tanggal">Tanggal:</label>
+            <input type="date" id="tanggal" name="tanggal" value="" readonly>
+
+            <label for="jam">Jam:</label>
+            <select id="jam" name="jam">
+                <option value="07:00">07:00</option>
+                <option value="08:00">08:00</option>
+                <option value="09:00">09:00</option>
+                <option value="10:00">10:00</option>
+                <option value="11:00">11:00</option>
+                <option value="12:00">12:00</option>
+                <option value="13:00">13:00</option>
+                <option value="14:00">14:00</option>
+                <option value="15:00">15:00</option>
+                <option value="16:00">16:00</option>
+                <option value="17:00">17:00</option>
+                <option value="18:00">18:00</option>
+            </select>
+
+            <label for="arah">Pilih Arah:</label>
+            <select id="arah" name="arah">
+                <option value="Selatan-Utara">Selatan-Utara</option>
+                <option value="Utara-Selatan">Utara-Selatan</option>
+                <option value="Barat-Timur">Barat-Timur</option>
+                <option value="Timur-Barat">Timur-Barat</option>
+            </select>
+
+            <label for="surveyor">Nama Surveyor:</label>
+            <select id="surveyor" name="surveyor">
+                <option value="Soni">Soni</option>
+                <option value="Aghen">Aghen</option>
+                <option value="Putri">Putri</option>
+                <option value="Deni">Deni</option>
+                <option value="Deden">Deden</option>
+                <option value="Eka">Eka</option>
+                <option value="Ade">Ade</option>
+            </select>
+
+            <label>Jumlah Kendaraan:</label>
+            <div class="input-group">
+                <div>
+                    <label for="motor">Motor:</label>
+                    <input type="number" id="motor" name="motor" placeholder="Jumlah Motor" value="0">
+                </div>
+                <div>
+                    <label for="mobil">Mobil:</label>
+                    <input type="number" id="mobil" name="mobil" placeholder="Jumlah Mobil" value="0">
+                </div>
+                <div>
+                    <label for="angkutan">Angkutan Umum:</label>
+                    <input type="number" id="angkutan" name="angkutan" placeholder="Jumlah Angkutan Umum" value="0">
+                </div>
+                <div>
+                    <label for="bus">Bus Besar:</label>
+                    <input type="number" id="bus" name="bus" placeholder="Jumlah Bus Besar" value="0">
+                </div>
+                <div>
+                    <label for="barang-kecil">Barang Kecil:</label>
+                    <input type="number" id="barang-kecil" name="barang-kecil" placeholder="Jumlah Barang Kecil" value="0">
+                </div>
+                <div>
+                    <label for="barang-besar">Barang Besar:</label>
+                    <input type="number" id="barang-besar" name="barang-besar" placeholder="Jumlah Barang Besar" value="0">
+                </div>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        // Mengatur arah otomatis berdasarkan lokasi
+        function adjustDirections() {
+            const lokasi = document.getElementById('lokasi').value;
+            const arah = document.getElementById('arah');
+            
+            if (lokasi === 'Lembang') {
+                arah.innerHTML = `
+                    <option value="Selatan-Utara">Selatan-Utara</option>
+                    <option value="Utara-Selatan">Utara-Selatan</option>
+                `;
+            } else if (lokasi === 'Padalarang') {
+                arah.innerHTML = `
+                    <option value="Barat-Timur">Barat-Timur</option>
+                    <option value="Timur-Barat">Timur-Barat</option>
+                `;
+            }
+        }
+
+        // Set tanggal otomatis pada waktu pengisian
+        document.getElementById('tanggal').value = new Date().toISOString().split('T')[0];
+    </script>
+
+</body>
+</html>
